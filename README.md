@@ -1,16 +1,6 @@
-# miniblog
+# 21.12.2023 tarihli workshop ödevi
 
-A new Flutter project.
+Konu:
+Derste geliştirdiğimiz projeye blog detay sayfası ekleyiniz.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Listeden tıklanan blogunığında o id ile web api'ye istek atılıp detaylar alınmalı ve istediğiniz bir tasarımla gösterilmeldir.

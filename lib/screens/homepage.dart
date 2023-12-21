@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
 import 'package:miniblog/models/blog.dart';
 import 'package:miniblog/screens/add_blog.dart';
+import 'package:miniblog/screens/blog_details.dart';
 import 'dart:convert';
 
 import 'package:miniblog/widgets/blog_item.dart';
@@ -58,8 +59,15 @@ class _HomepageState extends State<Homepage> {
                   fetchBlogs();
                 },
                 child: ListView.builder(
-                  itemBuilder: (ctx, index) => BlogItem(
-                    blog: blogList[index],
+                  itemBuilder: (ctx, index) => InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) =>
+                              BlogDetails(blogId: blogList[index].id!)));
+                    },
+                    child: BlogItem(
+                      blog: blogList[index],
+                    ),
                   ),
                   itemCount: blogList.length,
                 ),

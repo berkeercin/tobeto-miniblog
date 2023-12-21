@@ -23,10 +23,9 @@ class _AddBlogState extends State<AddBlog> {
 
     var request = http.MultipartRequest("POST", url);
 
-    request.fields["Title"] = title;
-    request.fields["Content"] = content;
-    request.fields["Author"] = author;
-
+    request.fields["title"] = title;
+    request.fields["content"] = content;
+    request.fields["author"] = author;
     if (selectedImage != null) {
       http.MultipartFile file =
           await http.MultipartFile.fromPath("File", selectedImage!.path);
