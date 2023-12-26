@@ -5,22 +5,18 @@ import 'package:miniblog/blocs/article_bloc/article_event.dart';
 import 'package:miniblog/blocs/article_bloc/article_state.dart';
 import 'package:http/http.dart' as http;
 import 'package:miniblog/models/article.dart';
+import 'package:miniblog/repostories/article_repostory.dart';
 
 class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
-  ArticleBloc() : super(ArticlesInitial()) {
+  final ArticleRepostory articleRepostory;
+  ArticleBloc({required this.articleRepostory}) : super(ArticlesInitial()) {
     on<FetchArticles>(_onFetch);
     on<AddArticle>(_onAdd);
   }
 
   void _onFetch(FetchArticles event, Emitter<ArticleState> emit) async {
     emit(ArticlesLoading());
-    Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
-    final response = await http.get(url);
-    final List jsonData = json.decode(response.body);
-
-    List<Article> articles =
-        jsonData.map((json) => Article.fromJson(json)).toList();
-
+    final articles = await articleRepostory.fetchBlogs();
     emit(ArticlesLoaded(articles: articles));
     // ...
   }

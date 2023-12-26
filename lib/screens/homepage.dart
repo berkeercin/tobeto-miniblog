@@ -17,61 +17,58 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Blog Listesi"),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  bool? result = await Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (ctx) => Container()));
-                  if (result == true) {
-                    // fetchBlogs();
-                  }
-                },
-                icon: const Icon(Icons.add))
-          ],
-        ),
-        body: BlocProvider(
-          create: (context) => ArticleBloc(),
-          child:
-              BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
-            if (state is ArticlesInitial) {
-              context.read<ArticleBloc>().add(FetchArticles());
+      appBar: AppBar(
+        title: const Text("Blog Listesi"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                bool? result = await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => Container()));
+                if (result == true) {
+                  // fetchBlogs();
+                }
+              },
+              icon: const Icon(Icons.add))
+        ],
+      ),
+      body: BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
+        if (state is ArticlesInitial) {
+          context.read<ArticleBloc>().add(FetchArticles());
 
-              return Center(child: Text("İstek yükleniyor"));
-            }
+          return Center(child: Text("İstek yükleniyor"));
+        }
 
-            if (state is ArticlesLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is ArticlesError) {
-              return const Center(
-                child: Text("İstek hatalı..."),
-              );
-            }
+        if (state is ArticlesLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is ArticlesError) {
+          return const Center(
+            child: Text("İstek hatalı..."),
+          );
+        }
 
-            if (state is ArticlesLoaded) {
-              return ListView.builder(
-                itemCount: state.articles.length,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (ctx) =>
-                            ArticleDetails(blogId: state.articles[index].id!)));
-                  },
-                  child: ArticleItem(
-                    article: state.articles[index],
-                  ),
-                ),
-              );
-            }
+        if (state is ArticlesLoaded) {
+          return ListView.builder(
+            itemCount: state.articles.length,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) =>
+                        ArticleDetails(blogId: state.articles[index].id!)));
+              },
+              child: ArticleItem(
+                article: state.articles[index],
+              ),
+            ),
+          );
+        }
 
-            return const Center(
-              child: Text("Bilinmedik Durum"),
-            );
-          }),
-        ));
+        return const Center(
+          child: Text("Bilinmedik Durum"),
+        );
+      }),
+    );
   }
 }
