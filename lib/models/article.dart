@@ -1,13 +1,13 @@
-class Blog {
+class Article {
   String? id;
   String? title;
   String? content;
   String? thumbnail;
   String? author;
 
-  Blog({this.id, this.title, this.content, this.thumbnail, this.author});
+  Article({this.id, this.title, this.content, this.thumbnail, this.author});
 
-  Blog.fromJson(Map<String, dynamic> json) {
+  Article.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     content = json['content'];

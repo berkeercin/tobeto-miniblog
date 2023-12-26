@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
-import 'package:miniblog/models/blog.dart';
-import 'package:miniblog/screens/add_blog.dart';
-import 'package:miniblog/screens/blog_details.dart';
+import 'package:miniblog/models/article.dart';
+import 'package:miniblog/screens/add_article.dart';
+import 'package:miniblog/screens/article_details.dart';
 import 'dart:convert';
 
-import 'package:miniblog/widgets/blog_item.dart';
+import 'package:miniblog/widgets/article_item.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -15,7 +15,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Blog> blogList = [];
+  List<Article> articleList = [];
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _HomepageState extends State<Homepage> {
     final response = await http.get(url);
     final List jsonData = json.decode(response.body);
     setState(() {
-      blogList = jsonData.map((json) => Blog.fromJson(json)).toList();
+      articleList = jsonData.map((json) => Article.fromJson(json)).toList();
     });
   }
 
@@ -42,7 +42,7 @@ class _HomepageState extends State<Homepage> {
             IconButton(
                 onPressed: () async {
                   bool? result = await Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => const AddBlog()));
+                      MaterialPageRoute(builder: (ctx) => const AddArticle()));
                   if (result == true) {
                     fetchBlogs();
                   }
@@ -50,7 +50,7 @@ class _HomepageState extends State<Homepage> {
                 icon: const Icon(Icons.add))
           ],
         ),
-        body: blogList.isEmpty
+        body: articleList.isEmpty
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -63,13 +63,13 @@ class _HomepageState extends State<Homepage> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) =>
-                              BlogDetails(blogId: blogList[index].id!)));
+                              ArticleDetails(blogId: articleList[index].id!)));
                     },
-                    child: BlogItem(
-                      blog: blogList[index],
+                    child: ArticleItem(
+                      blog: articleList[index],
                     ),
                   ),
-                  itemCount: blogList.length,
+                  itemCount: articleList.length,
                 ),
               ));
   }

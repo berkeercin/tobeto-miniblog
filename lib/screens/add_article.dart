@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
-class AddBlog extends StatefulWidget {
-  const AddBlog({Key? key}) : super(key: key);
+class AddArticle extends StatefulWidget {
+  const AddArticle({Key? key}) : super(key: key);
 
   @override
-  _AddBlogState createState() => _AddBlogState();
+  _AddArticleState createState() => _AddArticleState();
 }
 
-class _AddBlogState extends State<AddBlog> {
+class _AddArticleState extends State<AddArticle> {
   final _formKey = GlobalKey<FormState>();
   final ImagePicker imagePicker = ImagePicker();
   XFile? selectedImage;

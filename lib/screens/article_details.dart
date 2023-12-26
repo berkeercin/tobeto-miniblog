@@ -3,18 +3,18 @@ import 'dart:io';
 import "package:http/http.dart" as http;
 
 import 'package:flutter/material.dart';
-import 'package:miniblog/models/blog.dart';
+import 'package:miniblog/models/article.dart';
 
-class BlogDetails extends StatefulWidget {
-  const BlogDetails({required this.blogId, Key? key}) : super(key: key);
+class ArticleDetails extends StatefulWidget {
+  const ArticleDetails({required this.blogId, Key? key}) : super(key: key);
   final String blogId;
   @override
-  _BlogDetailsState createState() => _BlogDetailsState();
+  _ArticleDetailsState createState() => _ArticleDetailsState();
 }
 
-class _BlogDetailsState extends State<BlogDetails> {
-  List<Blog> blogList = [];
-  Blog blog = Blog();
+class _ArticleDetailsState extends State<ArticleDetails> {
+  List<Article> blogList = [];
+  Article blog = Article();
   fetchBlogs() async {
     Uri url = Uri.parse(
         "https://tobetoapi.halitkalayci.com/api/Articles/${widget.blogId}");
@@ -22,7 +22,7 @@ class _BlogDetailsState extends State<BlogDetails> {
     print(json.decode(response.body));
     final jsonData = json.decode(response.body);
     setState(() {
-      blog = Blog.fromJson(jsonData);
+      blog = Article.fromJson(jsonData);
       // jsonData.map((json) => Blog.fromJson(json)).toList();
       // print(blogList[0]);
     });

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:miniblog/models/blog.dart';
+import 'package:miniblog/models/article.dart';
 
-class BlogItem extends StatelessWidget {
-  const BlogItem({required this.blog, Key? key}) : super(key: key);
-  final Blog blog;
+class ArticleItem extends StatelessWidget {
+  const ArticleItem({required this.blog, Key? key}) : super(key: key);
+  final Article blog;
   @override
   Widget build(BuildContext context) {
     return Card(
