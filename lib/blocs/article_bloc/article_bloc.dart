@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miniblog/blocs/article_bloc/article_event.dart';
 import 'package:miniblog/blocs/article_bloc/article_state.dart';
 

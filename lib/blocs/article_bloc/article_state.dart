@@ -1,4 +1,5 @@
 import 'package:miniblog/models/article.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class ArticleState {}
 

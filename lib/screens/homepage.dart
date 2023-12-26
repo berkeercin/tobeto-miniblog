@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
+import 'package:miniblog/blocs/article_bloc/article_bloc.dart';
+import 'package:miniblog/blocs/article_bloc/article_state.dart';
 import 'package:miniblog/models/article.dart';
 import 'package:miniblog/screens/add_article.dart';
 import 'package:miniblog/screens/article_details.dart';
 import 'dart:convert';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miniblog/widgets/article_item.dart';
 
 class Homepage extends StatefulWidget {
@@ -15,23 +17,14 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Article> articleList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    // http paketi ile istek
-    fetchBlogs();
-  }
-
-  fetchBlogs() async {
-    Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
-    final response = await http.get(url);
-    final List jsonData = json.decode(response.body);
-    setState(() {
-      articleList = jsonData.map((json) => Article.fromJson(json)).toList();
-    });
-  }
+  // fetchBlogs() async {
+  //   Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
+  //   final response = await http.get(url);
+  //   final List jsonData = json.decode(response.body);
+  //   setState(() {
+  //     articleList = jsonData.map((json) => Article.fromJson(json)).toList();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -44,33 +37,20 @@ class _HomepageState extends State<Homepage> {
                   bool? result = await Navigator.of(context).push(
                       MaterialPageRoute(builder: (ctx) => const AddArticle()));
                   if (result == true) {
-                    fetchBlogs();
+                    // fetchBlogs();
                   }
                 },
                 icon: const Icon(Icons.add))
           ],
         ),
-        body: articleList.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : RefreshIndicator(
-                onRefresh: () async {
-                  fetchBlogs();
-                },
-                child: ListView.builder(
-                  itemBuilder: (ctx, index) => InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) =>
-                              ArticleDetails(blogId: articleList[index].id!)));
-                    },
-                    child: ArticleItem(
-                      blog: articleList[index],
-                    ),
-                  ),
-                  itemCount: articleList.length,
-                ),
-              ));
+        body: BlocProvider(
+          create: (context) => ArticleBloc(),
+          child:
+              BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
+            return const Center(
+              child: Text("Yazı"),
+            );
+          }),
+        ));
   }
 }
