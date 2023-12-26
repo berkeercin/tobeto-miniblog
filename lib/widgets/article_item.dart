@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:miniblog/models/article.dart';
 
 class ArticleItem extends StatelessWidget {
-  const ArticleItem({required this.blog, Key? key}) : super(key: key);
-  final Article blog;
+  const ArticleItem({required this.article, Key? key}) : super(key: key);
+  final Article article;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,10 +16,10 @@ class ArticleItem extends StatelessWidget {
                 aspectRatio: 4 / 3,
                 child: Container(
                     color: Colors.grey.withOpacity(0.3),
-                    child: Image.network(blog.thumbnail!))),
+                    child: Image.network(article.thumbnail!))),
             ListTile(
-              title: Text(blog.title!),
-              subtitle: Text(blog.author!),
+              title: Text(article.title!),
+              subtitle: Text(article.author!),
             )
           ],
         ),
