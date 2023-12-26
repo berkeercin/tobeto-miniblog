@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import "package:http/http.dart" as http;
 import 'package:miniblog/blocs/article_bloc/article_bloc.dart';
 import 'package:miniblog/blocs/article_bloc/article_event.dart';
 import 'package:miniblog/blocs/article_bloc/article_state.dart';
-import 'package:miniblog/models/article.dart';
-import 'package:miniblog/screens/add_article.dart';
-import 'package:miniblog/screens/article_details.dart';
-import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:miniblog/screens/article_details.dart';
 import 'package:miniblog/widgets/article_item.dart';
 
 class Homepage extends StatefulWidget {
@@ -59,8 +55,16 @@ class _HomepageState extends State<Homepage> {
             if (state is ArticlesLoaded) {
               return ListView.builder(
                 itemCount: state.articles.length,
-                itemBuilder: (context, index) =>
-                    ArticleItem(article: state.articles[index]),
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) =>
+                            ArticleDetails(blogId: state.articles[index].id!)));
+                  },
+                  child: ArticleItem(
+                    article: state.articles[index],
+                  ),
+                ),
               );
             }
 
