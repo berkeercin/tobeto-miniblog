@@ -13,4 +13,9 @@ class ArticlesLoaded extends ArticleState {
   ArticlesLoaded({required this.articles});
 }
 
+class ArticleLoaded extends ArticleState {
+  final Article article;
+  ArticleLoaded({required this.article});
+}
+
 class ArticlesError extends ArticleState {}

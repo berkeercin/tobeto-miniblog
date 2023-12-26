@@ -1,43 +1,27 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:miniblog/blocs/article_bloc/article_bloc.dart';
+import 'package:miniblog/blocs/article_bloc/article_event.dart';
+import 'package:miniblog/blocs/article_bloc/article_state.dart';
 
-class AddArticle extends StatefulWidget {
-  const AddArticle({Key? key}) : super(key: key);
+class AddArticlePage extends StatefulWidget {
+  const AddArticlePage({Key? key}) : super(key: key);
 
   @override
-  _AddArticleState createState() => _AddArticleState();
+  _AddArticlePageState createState() => _AddArticlePageState();
 }
 
-class _AddArticleState extends State<AddArticle> {
+class _AddArticlePageState extends State<AddArticlePage> {
   final _formKey = GlobalKey<FormState>();
   final ImagePicker imagePicker = ImagePicker();
   XFile? selectedImage;
   String title = "";
   String content = "";
   String author = "";
-  submit() async {
-    Uri url = Uri.parse("https://tobetoapi.halitkalayci.com/api/Articles");
-
-    var request = http.MultipartRequest("POST", url);
-
-    request.fields["title"] = title;
-    request.fields["content"] = content;
-    request.fields["author"] = author;
-    if (selectedImage != null) {
-      http.MultipartFile file =
-          await http.MultipartFile.fromPath("File", selectedImage!.path);
-      request.files.add(file);
-    }
-
-    final response = await request.send();
-
-    if (response.statusCode == 201) {
-      Navigator.pop(context, true);
-    }
-  }
 
   pickImage() async {
     XFile? selectedFile =
@@ -52,6 +36,13 @@ class _AddArticleState extends State<AddArticle> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Yeni blog ekle"),
+        leading: InkWell(
+          child: Icon(Icons.arrow_back),
+          onTap: () {
+            Navigator.pop(context);
+            context.read<ArticleBloc>().add(FetchArticles());
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -106,11 +97,15 @@ class _AddArticleState extends State<AddArticle> {
                   decoration: const InputDecoration(label: Text("Ad Soyad")),
                 ),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         // forumun valid olduğu durum
                         _formKey.currentState!.save();
-                        submit();
+                        context.read<ArticleBloc>().add(
+                            AddArticle(selectedImage, title, content, author));
+                        await Future.delayed(Duration(seconds: 3));
+                        Navigator.pop(context);
+                        context.read<ArticleBloc>().add(FetchArticles());
                       }
                     },
                     child: const Text("Blog Ekle"))

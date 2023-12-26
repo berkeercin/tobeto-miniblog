@@ -3,6 +3,7 @@ import 'package:miniblog/blocs/article_bloc/article_bloc.dart';
 import 'package:miniblog/blocs/article_bloc/article_event.dart';
 import 'package:miniblog/blocs/article_bloc/article_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:miniblog/screens/add_article.dart';
 import 'package:miniblog/screens/article_details.dart';
 import 'package:miniblog/widgets/article_item.dart';
 
@@ -22,8 +23,8 @@ class _HomepageState extends State<Homepage> {
         actions: [
           IconButton(
               onPressed: () async {
-                bool? result = await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctx) => Container()));
+                bool? result = await Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => AddArticlePage()));
                 if (result == true) {
                   // fetchBlogs();
                 }
@@ -54,6 +55,9 @@ class _HomepageState extends State<Homepage> {
             itemCount: state.articles.length,
             itemBuilder: (context, index) => InkWell(
               onTap: () {
+                context
+                    .read<ArticleBloc>()
+                    .add(FetchArticle(state.articles[index].id));
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) =>
                         ArticleDetails(blogId: state.articles[index].id!)));
