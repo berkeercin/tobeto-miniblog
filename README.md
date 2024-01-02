@@ -2,5 +2,3 @@
 
 Konu:
 Blog uygulamanızdaki tüm sayfaları (eklemeden başlayarak) BLoC pattern ile çalışacak duruma getiriniz.
-
-Ekran görüntüsü:
