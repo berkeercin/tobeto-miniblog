@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import "package:http/http.dart" as http;
-
 import 'package:flutter/material.dart';
-import 'package:miniblog/blocs/article_bloc/article_bloc.dart';
-import 'package:miniblog/blocs/article_bloc/article_event.dart';
-import 'package:miniblog/blocs/article_bloc/article_state.dart';
-import 'package:miniblog/models/article.dart';
+import 'package:miniblog/blocs/article_detail_bloc/article_detail_bloc.dart';
+import 'package:miniblog/blocs/article_detail_bloc/article_detail_event.dart';
+import 'package:miniblog/blocs/article_detail_bloc/article_detail_state.dart';
 
 class ArticleDetails extends StatefulWidget {
   const ArticleDetails({required this.blogId, Key? key}) : super(key: key);
@@ -18,7 +14,7 @@ class ArticleDetails extends StatefulWidget {
 class _ArticleDetailsState extends State<ArticleDetails> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ArticleBloc, ArticleState>(
+    return BlocBuilder<ArticleDetailBloc, ArticleDetailState>(
       builder: (context, state) {
         if (state is ArticleLoaded) {
           return Scaffold(
@@ -31,7 +27,6 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                 child: Icon(Icons.arrow_back),
                 onTap: () {
                   Navigator.pop(context);
-                  context.read<ArticleBloc>().add(FetchArticles());
                 },
               ),
             ),

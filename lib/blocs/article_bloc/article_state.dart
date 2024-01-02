@@ -1,5 +1,4 @@
 import 'package:miniblog/models/article.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class ArticleState {}
 
@@ -11,11 +10,6 @@ class ArticlesLoaded extends ArticleState {
   final List<Article> articles;
 
   ArticlesLoaded({required this.articles});
-}
-
-class ArticleLoaded extends ArticleState {
-  final Article article;
-  ArticleLoaded({required this.article});
 }
 
 class ArticlesError extends ArticleState {}
